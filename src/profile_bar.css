@@ -1,0 +1,364 @@
+/* ==========================================================================
+   S&H Software Solutions - User Menu Region Plugin
+   Prefix: sh-um-*  (avoids collisions with Universal Theme / APEX IDs)
+   ==========================================================================
+   Version: 1.1.0 - Dropdown panel width is now content-based (min/max
+   bounds instead of a fixed px value from an attribute). New
+   .sh-um-item-icon-text class for plain text/emoji icons (as opposed
+   to a Font Awesome icon-font class).
+   ========================================================================== */
+
+.sh-um-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* -------------------------------------------------------------------- */
+/* Trigger (avatar + name/email + chevron)                              */
+/* -------------------------------------------------------------------- */
+
+.sh-um-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.15s ease;
+}
+
+.sh-um-trigger:hover,
+.sh-um-wrapper.is-active .sh-um-trigger {
+    background-color: rgba(0, 0, 0, 0.04);
+}
+
+.sh-um-trigger:focus-visible {
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5) !important;
+}
+
+/* -------------------------------------------------------------------- */
+/* Avatar                                                                */
+/* -------------------------------------------------------------------- */
+
+.sh-um-avatar {
+    position: relative;
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: #E5E7EB;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+}
+
+.sh-um-avatar--round {
+    border-radius: 50% !important;
+}
+
+.sh-um-avatar--square {
+    border-radius: 0 !important;
+}
+
+.sh-um-avatar--rounded {
+    border-radius: 8px !important;
+}
+
+.sh-um-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.sh-um-avatar-initials {
+    font-size: 13px;
+    font-weight: 600;
+    color: #4B5563;
+    line-height: 1;
+    user-select: none;
+}
+
+.sh-um-status-dot {
+    position: absolute;
+    bottom: -1px;
+    right: -1px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50% !important;
+    border: 2px solid #FFFFFF;
+    box-sizing: content-box;
+}
+
+/* -------------------------------------------------------------------- */
+/* Name / Email                                                         */
+/* -------------------------------------------------------------------- */
+
+.sh-um-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.25;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.sh-um-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--sh-um-name-color, #FFFFFF);
+}
+
+.sh-um-email {
+    font-size: 12px;
+    color: var(--sh-um-email-color, #FFFFFF);
+}
+
+/* -------------------------------------------------------------------- */
+/* Chevron                                                               */
+/* -------------------------------------------------------------------- */
+
+.sh-um-chevron {
+    flex: 0 0 auto;
+    width: 8px;
+    height: 8px;
+    border-right: 1.5px solid #ffffff;
+    border-bottom: 1.5px solid #ffffff;
+    transform: rotate(45deg);
+    margin-top: -3px;
+    transition: transform 0.15s ease;
+}
+
+.sh-um-wrapper.is-active .sh-um-chevron {
+    transform: rotate(225deg);
+    margin-top: 3px;
+}
+
+/* -------------------------------------------------------------------- */
+/* Outside logout button                                                 */
+/* -------------------------------------------------------------------- */
+
+/* Shared base - variant classes (--style1..4) control size/shape/fill */
+.sh-um-logout-outside {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    text-decoration: none;
+    flex: 0 0 auto;
+    border: 1.5px solid transparent;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.sh-um-logout-outside-text {
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Style 1 - icon only, ghost hover (original default look) */
+.sh-um-logout-outside--style1 {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+}
+
+.sh-um-logout-outside--style1:hover {
+    background-color: #FFFFFF;
+    color: #7A2941;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+}
+
+/* Style 2 - icon only, outlined circle always visible */
+.sh-um-logout-outside--style2 {
+    width: 33px;
+    height: 33px;
+    border-radius: 50% !important;
+    border-color: #ffffff;
+}
+
+.sh-um-logout-outside--style2:hover {
+    background-color: #FFFFFF;
+    border-color: #FFFFFF;
+    color: #7A2941;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+}
+
+/* Style 3 - icon + text, ghost hover */
+.sh-um-logout-outside--style3 {
+    height: 32px;
+    padding: 0 12px;
+    border-radius: 8px;
+    gap: 6px;
+}
+
+.sh-um-logout-outside--style3:hover {
+    background-color: #FFFFFF;
+    color: #7A2941;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+}
+
+/* Style 4 - solid filled button, icon + text */
+.sh-um-logout-outside--style4 {
+    height: 32px;
+    padding: 0 14px;
+    border-radius: 8px;
+    gap: 6px;
+    background-color: #DC2626;
+    border-color: #DC2626;
+    color: #FFFFFF;
+}
+
+.sh-um-logout-outside--style4:hover {
+    background-color: #B91C1C;
+    border-color: #B91C1C;
+    color: #FFFFFF;
+}
+
+/* -------------------------------------------------------------------- */
+/* Dropdown panel (portaled to <body> by JS)                            */
+/* -------------------------------------------------------------------- */
+
+.sh-um-panel {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    /* Content-based width instead of a fixed attribute value: grows to
+       fit the longest menu item text, but never below/above these
+       bounds. JS positions the panel by anchoring its RIGHT edge to
+       the trigger's right edge (see positionPanel in the JS file) and
+       lets it grow LEFTWARD from there, so this works with no JS
+       changes needed. */
+    width: max-content;
+    min-width: 180px;
+    max-width: 360px;
+    background-color: var(--sh-um-panel-bg, #FFFFFF);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
+    padding: 6px;
+    box-sizing: border-box;
+}
+
+.sh-um-panel.is-open {
+    display: block;
+    animation: sh-um-swipe-in 0.5s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+}
+
+@keyframes sh-um-swipe-in {
+    0% {
+        opacity: 0;
+        transform: translateX(60px) scale(0.96);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+.sh-um-panel.is-closing {
+    display: block;
+    animation: sh-um-swipe-out 0.3s cubic-bezier(0.4, 0, 1, 1) both;
+    pointer-events: none;
+}
+
+@keyframes sh-um-swipe-out {
+    0% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(60px) scale(0.96);
+    }
+}
+
+@keyframes sh-um-panel-out {
+    0% {
+        opacity: 1;
+        clip-path: circle(141% at 100% 0%);
+        transform: scale(1);
+        filter: blur(0px);
+    }
+    100% {
+        opacity: 0;
+        clip-path: circle(0% at 100% 0%);
+        transform: scale(0.92);
+        filter: blur(6px);
+    }
+}
+
+.sh-um-panel-items {
+    display: flex;
+    flex-direction: column;
+}
+
+.sh-um-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: var(--sh-um-panel-text, #111827);
+    font-size: 13px;
+    outline: none;
+}
+
+.sh-um-item--sub {
+    padding-left: 30px;
+}
+
+.sh-um-item:hover,
+.sh-um-item:focus-visible {
+    background-color: var(--sh-um-panel-hover, #F3F4F6);
+    color: #FFFFFF;
+}
+
+.sh-um-item-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    flex: 0 0 auto;
+    color: inherit;
+    opacity: 0.75;
+}
+
+/* Plain text/emoji icon variant - used instead of an icon-font glyph
+   when the dropdown query's icon column isn't a "fa-..." value (see
+   f_render_icon_span in the render function). Sits inside the SAME
+   .sh-um-item-icon wrapper as the Font Awesome variant, so row
+   alignment stays identical either way. */
+.sh-um-item-icon-text {
+    display: inline-block;
+    font-size: 14px;
+    line-height: 1;
+    font-style: normal;
+}
+
+.sh-um-item-text {
+    flex: 1 1 auto;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sh-um-separator {
+    height: 1px;
+    margin: 6px 4px;
+    background-color: rgba(0, 0, 0, 0.08);
+}
+
+.sh-um-item--logout {
+    color: #DC2626;
+}
+
+.sh-um-item--logout:hover,
+.sh-um-item--logout:focus-visible {
+    background-color: rgba(220, 38, 38, 0.08);
+    color: #DC2626;
+}
