@@ -144,17 +144,23 @@ Each attribute runs its own lookup — configuring *E-Mail* is not a prerequisit
 
 ```sql
 -- icon: "fa-xxx" or "fa-xxx|#hexcolor" or "text/emoji" or "text/emoji|#hexcolor"
--- Font APEX names only (FA4-based) — not fa-pen / fa-triangle-exclamation etc.
+-- Font APEX names only (FA4-based) - not fa-pen/fa-triangle-exclamation etc.
 
-SELECT 'fa-user'                        AS icon,
-       'My Profile'                     AS dropdown_text,
-       apex_page.get_url(p_page => 10)  AS link,
-       'MAIN'                           AS menu_type
+SELECT 'fa-user'                                  AS icon,
+       'My Profile'                               AS dropdown_text,
+       apex_page.get_url(p_page => 10)            AS link,
+       'MAIN'                                     AS menu_type
 FROM dual
 UNION ALL
 SELECT 'fa-pencil|#6B7280',
        'Edit Profile',
        apex_page.get_url(p_page => 10, p_items => 'P10_MODE', p_values => 'EDIT'),
+       'SUB'
+FROM dual
+UNION ALL
+SELECT 'fa-image|#6B7280',
+       'Change Photo',
+       apex_page.get_url(p_page => 10, p_items => 'P10_MODE,P10_SECTION', p_values => 'EDIT,PHOTO'),
        'SUB'
 FROM dual
 UNION ALL
@@ -164,10 +170,64 @@ SELECT '🔔',
        'MAIN'
 FROM dual
 UNION ALL
+SELECT 'fa-envelope|#2563EB',
+       'Email Preferences',
+       apex_page.get_url(p_page => 11, p_items => 'P11_TAB', p_values => 'EMAIL'),
+       'SUB'
+FROM dual
+UNION ALL
+SELECT '📱|#22C55E',
+       'Push Notifications',
+       apex_page.get_url(p_page => 11, p_items => 'P11_TAB', p_values => 'PUSH'),
+       'SUB'
+FROM dual
+UNION ALL
+SELECT 'fa-exclamation-triangle|#F59E0B',
+       'Billing',
+       apex_page.get_url(p_page => 50),
+       'MAIN'
+FROM dual
+UNION ALL
+SELECT '€|#2563EB',
+       'Invoices',
+       apex_page.get_url(p_page => 50, p_items => 'P50_TAB', p_values => 'INVOICES'),
+       'SUB'
+FROM dual
+UNION ALL
+SELECT 'fa-credit-card|#6B7280',
+       'Payment Methods',
+       apex_page.get_url(p_page => 50, p_items => 'P50_TAB', p_values => 'PAYMENT'),
+       'SUB'
+FROM dual
+UNION ALL
+SELECT '💬',
+       'Support',
+       apex_page.get_url(p_page => 60),
+       'MAIN'
+FROM dual
+UNION ALL
 SELECT '💬|#25D366',
        'WhatsApp Support',
        'https://wa.me/491234567890',
        'SUB'
+FROM dual
+UNION ALL
+SELECT 'fa-envelope',
+       'Email Support',
+       'mailto:support@weisse-elfen-campus.de',
+       'SUB'
+FROM dual
+UNION ALL
+SELECT 'fa-gear',
+       'Settings',
+       apex_page.get_url(p_page => 900),
+       'MAIN'
+FROM dual
+UNION ALL
+SELECT '?|#6B7280',
+       'Help & Support',
+       'https://support.weisse-elfen-campus.de',
+       'MAIN'
 FROM dual
 ```
 
