@@ -33,7 +33,7 @@ prompt APPLICATION 112 - 01. Weiße Elfen Campus Admin
 -- Application Export:
 --   Application:     112
 --   Name:            01. Weiße Elfen Campus Admin
---   Date and Time:   22:15 Tuesday September 8, 2026
+--   Date and Time:   22:47 Tuesday September 8, 2026
 --   Exported By:     SAJJAD
 --   Flashback:       0
 --   Export Type:     Component Export
@@ -1228,13 +1228,13 @@ unistr('SELECT ''\D83D\DCAC'','),
 'UNION ALL',
 unistr('SELECT ''\D83D\DCAC|#25D366'','),
 '       ''WhatsApp Support'',',
-'       ''https://wa.me/491234567890'',',
+'       ''https://wa.me/4917643477786'',',
 '       ''SUB''',
 'FROM dual',
 'UNION ALL',
 'SELECT ''fa-envelope'',',
 '       ''Email Support'',',
-'       ''mailto:support@weisse-elfen-campus.de'',',
+'       ''mailto:support@shsoftwaresolution.com'',',
 '       ''SUB''',
 'FROM dual',
 'UNION ALL',
@@ -1246,7 +1246,7 @@ unistr('SELECT ''\D83D\DCAC|#25D366'','),
 'UNION ALL',
 'SELECT ''?|#6B7280'',',
 '       ''Help & Support'',',
-'       ''https://support.weisse-elfen-campus.de'',',
+'       ''https://shsoftwaresolution.com'',',
 '       ''MAIN''',
 'FROM dual'))
 ,p_is_translatable=>false

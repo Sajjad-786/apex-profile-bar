@@ -4,23 +4,40 @@
 ![License](https://img.shields.io/badge/license-MIT-blue)
 ![Version](https://img.shields.io/badge/version-1.2.0-green)
 
+<table border="0">
+<tr>
+<td width="58%" valign="top">
+
 Turns the Oracle APEX navigation bar into a complete user area: avatar with online status, name and e-mail, a logout button in four styles, and a multi-level dropdown menu built from a plain four-column SQL query — no Navigation Bar List, no Page 0 CSS, no Dynamic Content region.
 
-![Profile Bar in action](screenshots/profile-bar-preview.jpg)
+**In the demo →**
+
+- a click on the bar opens the panel with a swipe-in animation
+- `MAIN` entries sit flush left, `SUB` entries indented underneath them
+- every entry carries its own Font APEX icon or emoji in its own color
+- rows highlight on hover in the configured hover color
+- *Sign Out* sits outside the panel as a solid button (Logout Style 4)
+
+Everything in that menu — labels, icons, colors, links, nesting — comes out of **one SQL query**. No list, no template, no JavaScript of your own.
+
+</td>
+<td width="42%" valign="top">
+
+<img src="screenshots/profile-bar-demo.gif" alt="Profile Bar demo: clicking the bar opens the dropdown with nested menu entries, colored icons and hover highlighting, next to the solid Sign Out button" width="100%">
+
+</td>
+</tr>
+</table>
 
 ---
 
 ## ✨ Features
 
-<table border="0">
-<tr>
-<td width="65%" valign="top">
-
 - 🖼️ **Avatar straight from the database** — point *Image Source* at a `BLOB` column with a `TABLE.MATCH_COLUMN.VALUE_COLUMN` reference and the plugin embeds it as Base64; no `apex_util.get_blob_file` call, no extra page, no ORDS handler
 - 🔤 **Initials fallback** — no image, no matching row, or an image over 300 KB? The plugin draws the user's initials instead of failing the page
 - 🔵 **Three avatar shapes** — round, square or rounded, with an optional border color
 - 🟢 **Online status dot** — a colored dot on the avatar corner, color freely configurable
-- 👤 **Independent lookups** — First Name, Last Name, E-Mail and Image each run their *own* lookup against `APP_USER`; configure only the ones you need, mix database references, item references (`&P3_EMAIL.`) and literal text freely
+- 👤 **Independent lookups** — First Name, Last Name, E-Mail and Image each run their *own* lookup against `APP_USER`; configure only the ones you need, and mix database references, item references (`&P3_EMAIL.`) and literal text freely
 - 🗂️ **Multi-level dropdown from SQL** — one query returning `icon, text, link, menu_type`; `MAIN` renders a top-level row, `SUB` an indented one underneath it
 - 🎨 **Icon and color per entry** — `fa-user`, `fa-user|#6B7280`, a bare emoji, or `💬|#25D366` — Font APEX classes and plain text/emoji both work
 - 🚪 **Logout button, four styles** — icon only, outlined icon, icon + text, or a solid button; placed *outside* the dropdown as a real button or *inside* it as the last menu entry
@@ -29,31 +46,6 @@ Turns the Oracle APEX navigation bar into a complete user area: avatar with onli
 - 🔁 **Refresh safe** — `init()` tracks the wrapper id, so a partial page refresh never binds the handlers twice
 - 🛡️ **Fails quietly** — a broken menu query renders an empty dropdown instead of an error page, and every value is escaped before it reaches the markup
 - 🧩 **No database objects** — your own users table stays exactly as it is; all CSS classes are prefixed `sh-um-` so nothing collides with Universal Theme
-
-</td>
-<td width="35%" valign="top">
-
-![Page Designer attributes](screenshots/profile-bar-page-designer.png)
-
-</td>
-</tr>
-</table>
-
----
-
-## 📸 In action
-
-The bar with the dropdown open — main entries in bold, sub-entries indented, each with its own icon and color, and the solid *Sign Out* button next to it:
-
-![Profile Bar dropdown](screenshots/profile-bar-preview.jpg)
-
-Placed as a region in the **After Navigation Bar** position, template *Blank with Attributes*:
-
-![Region setup](screenshots/profile-bar-region-setup.png)
-
-The plugin definition with all 21 configuration attributes in four groups:
-
-![Plugin definition](screenshots/profile-bar-plugin-definition.png)
 
 ---
 
@@ -76,7 +68,7 @@ Nothing has to be uploaded from `src/` — the CSS and JS ship inside the plug-i
 
 ### 🧑 User Display
 
-![User Display](screenshots/profile-bar-attr-user-display.png)
+![User Display attributes: First Name, Last Name and Email, each pointing at a SUPER_ADMIN.SUAD_EMAIL column](screenshots/profile-bar-attr-user-display.png)
 
 | # | Attribute | Type | Default | Description |
 |---|---|---|---|---|
@@ -86,7 +78,7 @@ Nothing has to be uploaded from `src/` — the CSS and JS ship inside the plug-i
 
 ### 🖼️ Profile Image
 
-![Profile Image](screenshots/profile-bar-attr-profile-image.png)
+![Profile Image attributes: Show Image on, Image Source and MIME Type as BLOB references, shape Round, border color and status dot](screenshots/profile-bar-attr-profile-image.png)
 
 | # | Attribute | Type | Default | Description |
 |---|---|---|---|---|
@@ -100,7 +92,7 @@ Nothing has to be uploaded from `src/` — the CSS and JS ship inside the plug-i
 
 ### 🚪 Logout
 
-![Logout](screenshots/profile-bar-attr-logout.png)
+![Logout attributes: Show Logout Button on, Logout Target, Logout Icon fa-sign-out, Position Outside Dropdown, Style 4 Solid Button](screenshots/profile-bar-attr-logout.png)
 
 | # | Attribute | Type | Default | Description |
 |---|---|---|---|---|
@@ -112,12 +104,12 @@ Nothing has to be uploaded from `src/` — the CSS and JS ship inside the plug-i
 
 ### 📋 Dropdown Menu
 
-![Dropdown Menu](screenshots/profile-bar-attr-dropdown.png)
+![Dropdown Menu attributes: Enable Dropdown on, the four-column menu query, chevron switch and the background, hover and text color pickers](screenshots/profile-bar-attr-dropdown.png)
 
 | # | Attribute | Type | Default | Description |
 |---|---|---|---|---|
 | 14 | ⬇️ Enable Dropdown | Checkbox | `N` | Master switch for the whole group |
-| 15 | 🗂️ Dropdown Menu Query | SQL | a 14-entry sample menu | Exactly four columns: `icon, text, link, menu_type`. Empty → built-in default menu; a runtime error → empty dropdown, never a broken page (depends on *Enable Dropdown = Y*) |
+| 15 | 🗂️ Dropdown Menu Query | SQL | the 14-entry sample menu below | Exactly four columns: `icon, text, link, menu_type`. Empty → built-in default menu; a runtime error → empty dropdown, never a broken page (depends on *Enable Dropdown = Y*) |
 | 16 | ⌄ Show Chevron Icon | Checkbox | `Y` | The little arrow next to the avatar (depends on *Enable Dropdown = Y*) |
 | 17 | 🎨 Dropdown Background Color | Color | `#FFFFFF` | Panel background (depends on *Enable Dropdown = Y*) |
 | 18 | 🎨 Menu Item Hover Color | Color | `#c59595` | Row hover color (depends on *Enable Dropdown = Y*) |
@@ -142,19 +134,27 @@ Each attribute runs its own lookup — configuring *E-Mail* is not a prerequisit
 
 **Dropdown menu query — four columns, in this order**
 
+This is the query shipped as the attribute's default, and exactly the menu shown in the demo above.
+
 ```sql
 -- icon: "fa-xxx" or "fa-xxx|#hexcolor" or "text/emoji" or "text/emoji|#hexcolor"
--- Font APEX names only (FA4-based) — not fa-pen / fa-triangle-exclamation etc.
+-- Font APEX names only (FA4-based) - not fa-pen/fa-triangle-exclamation etc.
 
-SELECT 'fa-user'                        AS icon,
-       'My Profile'                     AS dropdown_text,
-       apex_page.get_url(p_page => 10)  AS link,
-       'MAIN'                           AS menu_type
+SELECT 'fa-user'                                  AS icon,
+       'My Profile'                               AS dropdown_text,
+       apex_page.get_url(p_page => 10)            AS link,
+       'MAIN'                                     AS menu_type
 FROM dual
 UNION ALL
 SELECT 'fa-pencil|#6B7280',
        'Edit Profile',
        apex_page.get_url(p_page => 10, p_items => 'P10_MODE', p_values => 'EDIT'),
+       'SUB'
+FROM dual
+UNION ALL
+SELECT 'fa-image|#6B7280',
+       'Change Photo',
+       apex_page.get_url(p_page => 10, p_items => 'P10_MODE,P10_SECTION', p_values => 'EDIT,PHOTO'),
        'SUB'
 FROM dual
 UNION ALL
@@ -164,10 +164,64 @@ SELECT '🔔',
        'MAIN'
 FROM dual
 UNION ALL
+SELECT 'fa-envelope|#2563EB',
+       'Email Preferences',
+       apex_page.get_url(p_page => 11, p_items => 'P11_TAB', p_values => 'EMAIL'),
+       'SUB'
+FROM dual
+UNION ALL
+SELECT '📱|#22C55E',
+       'Push Notifications',
+       apex_page.get_url(p_page => 11, p_items => 'P11_TAB', p_values => 'PUSH'),
+       'SUB'
+FROM dual
+UNION ALL
+SELECT 'fa-exclamation-triangle|#F59E0B',
+       'Billing',
+       apex_page.get_url(p_page => 50),
+       'MAIN'
+FROM dual
+UNION ALL
+SELECT '€|#2563EB',
+       'Invoices',
+       apex_page.get_url(p_page => 50, p_items => 'P50_TAB', p_values => 'INVOICES'),
+       'SUB'
+FROM dual
+UNION ALL
+SELECT 'fa-credit-card|#6B7280',
+       'Payment Methods',
+       apex_page.get_url(p_page => 50, p_items => 'P50_TAB', p_values => 'PAYMENT'),
+       'SUB'
+FROM dual
+UNION ALL
+SELECT '💬',
+       'Support',
+       apex_page.get_url(p_page => 60),
+       'MAIN'
+FROM dual
+UNION ALL
 SELECT '💬|#25D366',
        'WhatsApp Support',
-       'https://wa.me/491234567890',
+       'https://wa.me/4917643477786',
        'SUB'
+FROM dual
+UNION ALL
+SELECT 'fa-envelope',
+       'Email Support',
+       'mailto:support@shsoftwaresolution.com',
+       'SUB'
+FROM dual
+UNION ALL
+SELECT 'fa-gear',
+       'Settings',
+       apex_page.get_url(p_page => 900),
+       'MAIN'
+FROM dual
+UNION ALL
+SELECT '?|#6B7280',
+       'Help & Support',
+       'https://shsoftwaresolution.com',
+       'MAIN'
 FROM dual
 ```
 
@@ -214,6 +268,38 @@ The files under `src/` are the same code that is embedded in the plug-in export,
 | `render_profile_bar.sql` | 1.2.0 |
 | `profile_bar.css` | 1.1.0 |
 | `profile_bar.js` | — |
+
+---
+
+## 📚 Reference screenshots
+
+Full-size views of the plug-in in App Builder — collapsed so they don't get in the way.
+
+<details>
+<summary><b>All 21 attributes in Page Designer</b> — the four groups in one view</summary>
+<br>
+
+![Page Designer with the Profile Bar region selected, showing the User Display, Profile Image, Logout and Dropdown Menu attribute groups with the inline help for First Name open](screenshots/profile-bar-page-designer.png)
+
+</details>
+
+<details>
+<summary><b>Region setup</b> — how the region is placed on the page</summary>
+<br>
+
+The region uses **Type** *Profile Bar*, **Position** *After Navigation Bar* and **Template** *Blank with Attributes*. On the global page (Page 0) this puts the bar on every page of the application.
+
+![Page Designer Region tab for the Profile Bar region: Type Profile Bar, Position After Navigation Bar, Template Blank with Attributes](screenshots/profile-bar-region-setup.png)
+
+</details>
+
+<details>
+<summary><b>Plugin definition</b> — the component itself in Shared Components</summary>
+<br>
+
+![Shared Components plug-in definition for Profile Bar: region type plug-in with its render function, custom attributes and plugin files](screenshots/profile-bar-plugin-definition.png)
+
+</details>
 
 ---
 
